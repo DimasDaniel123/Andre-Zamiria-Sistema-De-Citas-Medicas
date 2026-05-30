@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Controlador.loginDAO;
+import Modelo.loginDAO;
 import Modelo.login;
 import javax.swing.JOptionPane;
 

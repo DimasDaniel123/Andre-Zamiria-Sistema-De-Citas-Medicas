@@ -70,4 +70,15 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <!-- Copy resources (images, etc) to build directory after compilation -->
+    <target name="-post-compile-single">
+        <copy todir="${build.classes.dir}">
+            <fileset dir="${src.dir}">
+                <exclude name="**/*.java"/>
+                <exclude name="**/*.form"/>
+            </fileset>
+        </copy>
+    </target>
+
 </project>

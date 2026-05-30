@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2022 a las 05:12:01
+-- Tiempo de generación: 05-12-2022 a las 14:41:46
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 7.4.30
 
@@ -30,23 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `cita` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `fecha` date NOT NULL,
-  `hora` timestamp NOT NULL DEFAULT current_timestamp(),
   `consultorio` varchar(100) NOT NULL,
   `doctor` varchar(100) NOT NULL,
-  `analisis` varchar(1000) NOT NULL
+  `analisis` varchar(1000) NOT NULL,
+  `servicio` varchar(10) NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `hora` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `filtrar`
+-- Volcado de datos para la tabla `cita`
 --
 
-CREATE TABLE `filtrar` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `cita` (`id`, `nombre`, `consultorio`, `doctor`, `analisis`, `servicio`, `fecha`, `hora`) VALUES
+(5, 'Juan', 'A', 'Fleofe Flores', 'Sangre', 'CONSULTAS ', '2022-12-3', '19:30'),
+(6, 'Dimas', 'B', 'Fleofe Flores', 'Sangre', 'CONSULTAS ', '2022-12-9', '19:00');
 
 -- --------------------------------------------------------
 
@@ -80,7 +78,9 @@ INSERT INTO `pacientes` (`id`, `nombre`, `apaterno`, `amaterno`, `edad`, `sexo`,
 (8, 'Dimas', 'Daniel', 'Flores', 20, 'Hombre', 'Dimas', 'Dimas', '9632153', 485585),
 (9, 'Munares', 'Torres', 'Romero', 20, 'Hombre', 'Lima', 'Lima', '9632123', 414141),
 (10, 'admin', 'admin', 'admin', 20, 'Hombre', 'admin', 'admin', '9293939', 45145151),
-(11, 'Favian', 'Favian', 'Favian', 20, 'Hombre', 'Favian', 'Favian', '63969696', 110101);
+(11, 'Favian', 'Favian', 'Favian', 20, 'Hombre', 'Favian', 'Favian', '63969696', 110101),
+(12, 'Dimas', 'Coñez', 'Flores', 20, 'Hombre', 'Lima', 'Lima', '9632123', 71618122),
+(13, 'Daniel', 'Flores', 'Flores', 9, 'Hombre', 'Lima', 'Lima', '9632123', 9632123);
 
 -- --------------------------------------------------------
 
@@ -95,11 +95,18 @@ CREATE TABLE `receta` (
   `ncitas` int(100) NOT NULL,
   `recetario` varchar(1000) NOT NULL,
   `alergias` varchar(100) NOT NULL,
-  `estatura` float NOT NULL,
-  `peso` float NOT NULL,
   `tiposangre` varchar(10) NOT NULL,
-  `presion` varchar(100) NOT NULL
+  `presion` varchar(100) NOT NULL,
+  `estatura` varchar(10) NOT NULL,
+  `peso` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `receta`
+--
+
+INSERT INTO `receta` (`id`, `nombre`, `nreceta`, `ncitas`, `recetario`, `alergias`, `tiposangre`, `presion`, `estatura`, `peso`) VALUES
+(1, 'Dimas', 10, 100, 'Paracetamol', 'Ibupufeno', 'A', '120', '1.72', '86');
 
 -- --------------------------------------------------------
 
@@ -111,15 +118,21 @@ CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `pass` varchar(100) NOT NULL
+  `pass` varchar(100) NOT NULL,
+  `rol` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `pass`) VALUES
-(1, 'anthony', 'admin', 'admin');
+INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `pass`, `rol`) VALUES
+(1, 'admin', 'admin', 'admin', 'Asistente'),
+(2, 'anthony', 'anthony', 'admin', 'Asistente'),
+(3, 'dimas', 'dimas', 'dimas', 'Asistente'),
+(8, 'dimass', 'dimas@fmial.com', 'dimas', 'Asistente'),
+(9, 'ibeth', 'ibeth', 'ibeth', 'Doctor'),
+(10, 'CuentaAdmin', 'CuentaAdmin', 'CuentaAdmin', 'Asistente');
 
 --
 -- Índices para tablas volcadas
@@ -129,12 +142,6 @@ INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `pass`) VALUES
 -- Indices de la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `filtrar`
---
-ALTER TABLE `filtrar`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -163,31 +170,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `filtrar`
---
-ALTER TABLE `filtrar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `receta`
 --
 ALTER TABLE `receta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
